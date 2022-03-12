@@ -1,54 +1,64 @@
 var hourEl = document.querySelector('.hour');
 var containerEl = document.querySelector('.container');
+var taskEl = document.querySelector('#task');
+var saveBtnEl = document.querySelector(".saveBtn");
 
-var tasks = [];
 
 // current date
-var currentDate = moment().format('MMMM Do YYYY, h:mm:ss a');
-console.log(currentDate);
+var currentDate = moment().format('MMMM Do YYYY, h:mm a');
 // append current date to page
 $("#currentDay").append(currentDate);
 
 var hourArr = [
   {
-    momentHour: 9,
+    dataId: 1,
+    hourId: 9,
     hourText: "9:00AM"
   },
   {
-    momentHour: 10,
+    dataId: 2,
+    hourId: 10,
     hourText: "10:00AM"
   },
   {
-    momentHour: 11,
+    dataId: 3,
+    hourId: 11,
     hourText: "11:00AM"
   },
   {
-    momentHour: 12,
+    dataId: 4,
+    hourId: 12,
     hourText: "12:00PM"
   },
   {
-    momentHour: 13,
+    dataId: 5,
+    hourId: 13,
     hourText: "1:00PM"
   },
   {
-    momentHour: 14,
+    dataId: 6,
+    hourId: 14,
     hourText: "2:00PM"
   },
   {
-    momentHour: 15,
+    dataId: 7,
+    hourId: 15,
     hourText: "3:00PM"
   },
   {
-    momentHour: 16,
+    dataId: 8,
+    hourId: 16,
     hourText: "4:00PM"
   },
   {
-    momentHour: 17,
+    dataId: 9,
+    hourId: 17,
     hourText: "5:00PM"
   }
 ];
 
 var showSchedule = function () {
+
   // use for loop to append 9 timeblocks
   for (var i = 0; i < 9; i++) {
   
@@ -68,12 +78,22 @@ var showSchedule = function () {
   // textarea element for task
   var descriptionEl = document.createElement("textarea")
   descriptionEl.classList = "col-12 col-md-9 description";
+  if (hourArr[i].hourId < currentHour) {
+    descriptionEl.setAttribute("class", "past col-12 col-md-9 description");
+  } else if (hourArr[i].hourId === currentHour) {
+    descriptionEl.setAttribute("class", "present col-12 col-md-9 description");
+  } else if (hourArr[i].hourId > currentHour) {
+    descriptionEl.setAttribute("class", "future col-12 col-md-9 description");
+  };
   descriptionEl.setAttribute("id", "task");
+  descriptionEl.setAttribute("data-hour-id", hourArr[i].dataId)
 
   // save button element
   var saveBtnEl = document.createElement("div")
   saveBtnEl.classList = "col saveBtn";
+  saveBtnEl.setAttribute("id", "save");
   saveBtnEl.innerHTML = "<i class='fa fa-save'></i>";
+  
 
   // append each element above to timeBlockEl
   timeBlockEl.appendChild(hourEl);
@@ -82,16 +102,10 @@ var showSchedule = function () {
   }
 };
 
-// check current hour
-var currentHour = moment().hour();
-console.log(currentHour);
-
-var saveTasks = function() {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+var currentHour = moment().hour() - 5;
+function refreshCurrentHour() {
+  setInterval(currentDate, 60000)
 };
-
-var loadTasks = function() {
-  tasks = JSON.parse(localStorage.getItem("tasks"));
-}
-
 showSchedule();
+refreshCurrentHour();
+
