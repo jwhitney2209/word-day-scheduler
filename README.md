@@ -10,5 +10,5 @@ This application is a work day scheduler that allows the user to add tasks throu
 ![Screenshot](./assets/images/screenshot.png "Work Day Scheduler")
 
 ## Deployed Application
-You can find the deployed application [HERE](https://jwhitney2209.github.io/word-day-scheduler/)
+You can find the deployed application [HERE](https://jwhitney2209.github.io/work-day-scheduler/)
 
