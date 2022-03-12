@@ -1,13 +1,12 @@
-var hourEl = document.querySelector('.hour');
-var containerEl = document.querySelector('.container');
-var taskEl = document.querySelector('#task');
-var saveBtnEl = document.querySelector(".saveBtn");
 
+var hourEl = $('.hour');
+var containerEl = $('.container');
+var taskEl = $('#task');
+var saveBtnEl = $(".saveBtn");
 
-// current date
-var currentDate = moment().format('MMMM Do YYYY, h:mm a');
-// append current date to page
-$("#currentDay").append(currentDate);
+var currentDate = moment().format('MMMM Do YYYY');
+$("#currentDay").html(currentDate);
+
 
 var hourArr = [
   {
@@ -61,51 +60,29 @@ var showSchedule = function () {
 
   // use for loop to append 9 timeblocks
   for (var i = 0; i < 9; i++) {
-  
-  // create div container for timeblock
-  var timeBlockEl = document.createElement("div")
-  timeBlockEl.classList = "row justify-content-center";
-  timeBlockEl.setAttribute("id", "timeblock");
-  // append to container
-  containerEl.appendChild(timeBlockEl);
-  
-  // create div element for hour
-  var hourEl = document.createElement("div")
-  hourEl.classList = "col hour";
-  hourEl.setAttribute("id", "hour");
-  hourEl.textContent = hourArr[i].hourText;
-
-  // textarea element for task
-  var descriptionEl = document.createElement("textarea")
-  descriptionEl.classList = "col-12 col-md-9 description";
-  if (hourArr[i].hourId < currentHour) {
-    descriptionEl.setAttribute("class", "past col-12 col-md-9 description");
-  } else if (hourArr[i].hourId === currentHour) {
-    descriptionEl.setAttribute("class", "present col-12 col-md-9 description");
-  } else if (hourArr[i].hourId > currentHour) {
-    descriptionEl.setAttribute("class", "future col-12 col-md-9 description");
-  };
-  descriptionEl.setAttribute("id", "task");
-  descriptionEl.setAttribute("data-hour-id", hourArr[i].dataId)
-
-  // save button element
-  var saveBtnEl = document.createElement("div")
-  saveBtnEl.classList = "col saveBtn";
-  saveBtnEl.setAttribute("id", "save");
-  saveBtnEl.innerHTML = "<i class='fa fa-save'></i>";
-  
-
-  // append each element above to timeBlockEl
-  timeBlockEl.appendChild(hourEl);
-  timeBlockEl.appendChild(descriptionEl);
-  timeBlockEl.appendChild(saveBtnEl);
+    $(".container").html("<div id='timeblock'>");
+    $("#timeblock")
+      .addClass("row justify-content-center")
+      .attr("data-hour-id", hourArr[i].dataId)
+      .html(
+        "<div id='hour'></div>"
+      + "<textarea id='taskText'></textarea>"
+      + "<div id='saveBtn'><i class='fa fa-save'></i>");
+    $("#hour").addClass("col hour").text(hourArr[i].hourText);
+    $("#taskText").attr("class", function(){
+      if (hourArr[i].hourId < currentHour) {
+        return "past col-12 col-md-9 description";
+      } else if (hourArr[i].hourId === currentHour) {
+        return "present col-12 col-md-9 description";
+      } else if (hourArr[i].hourId > currentHour) {
+        return "future col-12 col-md-9 description";
+      }
+    });
+    $("#saveBtn").addClass("col saveBtn").html("<i class='fa fa-save'></i>");
   }
 };
 
-var currentHour = moment().hour() - 5;
-function refreshCurrentHour() {
-  setInterval(currentDate, 60000)
-};
+var currentHour = moment().hour();
+
 showSchedule();
-refreshCurrentHour();
 
