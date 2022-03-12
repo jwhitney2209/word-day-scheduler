@@ -57,28 +57,22 @@ var hourArr = [
 ];
 
 var showSchedule = function () {
-
+  
   // use for loop to append 9 timeblocks
   for (var i = 0; i < 9; i++) {
-    $(".container").html("<div id='timeblock'>");
-    $("#timeblock")
-      .addClass("row justify-content-center")
-      .attr("data-hour-id", hourArr[i].dataId)
-      .html(
-        "<div id='hour'></div>"
-      + "<textarea id='taskText'></textarea>"
-      + "<div id='saveBtn'><i class='fa fa-save'></i>");
-    $("#hour").addClass("col hour").text(hourArr[i].hourText);
-    $("#taskText").attr("class", function(){
-      if (hourArr[i].hourId < currentHour) {
-        return "past col-12 col-md-9 description";
-      } else if (hourArr[i].hourId === currentHour) {
-        return "present col-12 col-md-9 description";
-      } else if (hourArr[i].hourId > currentHour) {
-        return "future col-12 col-md-9 description";
-      }
-    });
-    $("#saveBtn").addClass("col saveBtn").html("<i class='fa fa-save'></i>");
+
+  }
+
+
+};
+
+var checkWhatHour = function () {
+  if (hourArr[i].hourId < currentHour) {
+    return "past col-12 col-md-9 description";
+  } else if (hourArr[i].hourId === currentHour) {
+    return "present col-12 col-md-9 description";
+  } else if (hourArr[i].hourId > currentHour) {
+    return "future col-12 col-md-9 description";
   }
 };
 
